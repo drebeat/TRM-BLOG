@@ -1,195 +1,232 @@
- <?php
-    include 'partials/header.php';
+<?php
+include 'partials/header.php';
 
+// Pagination settings
+$posts_per_page = 4;
 
-    // fetch featured post from the database
-    $featured_query = "SELECT * FROM posts WHERE is_featured=1";
-    $featured_result = mysqli_query($connection, $featured_query);
-    $featured = mysqli_fetch_assoc($featured_result);
+// Get current page number from URL, default to 1
+$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$current_page = max(1, $current_page); // Ensure page is at least 1
 
-    // fetch 9 post from posts table
-    $query = "SELECT * FROM posts ORDER BY date_time DESC LIMIT 9";
-    $posts = mysqli_query($connection, $query);
-    ?>
+// Calculate offset for SQL query
+$offset = ($current_page - 1) * $posts_per_page;
 
+// Fetch featured post from the database
+$featured_query = "SELECT * FROM posts WHERE is_featured=1";
+$featured_result = mysqli_query($connection, $featured_query);
+$featured = mysqli_fetch_assoc($featured_result);
 
- <section class="featured">
-     <section class="singlepost" style="display: flex;">
-         <div class="container singlepost__container background-section slide image-1"></div>
-         <div class="container singlepost__container background-section slide image-2"></div>
-         <div class="container singlepost__container background-section slide image-3"></div>
-     </section>
+// Get total number of posts for pagination
+$count_query = "SELECT COUNT(*) as total FROM posts";
+$count_result = mysqli_query($connection, $count_query);
+$count_row = mysqli_fetch_assoc($count_result);
+$total_posts = $count_row['total'];
+$total_pages = ceil($total_posts / $posts_per_page);
 
-     <section class="doublepost">
-         <div class="container doublepost__container" id="stay0">
-             <h3 style="text-transform: uppercase;"> key highlights that define The Renewed Minds Ministries' approach to its mission</h3>
-             <p><b style="padding-left: .2rem;">Clarity in Gospel :</b> The ministry is committed to preaching the gospel of Christ to the world without any ambiguity, ensuring that the message is accessible and transformative.</p>
-             <p class="hidden-paragraph"><b style="padding-left: .2rem;">Clarity in Gospel :</b> The ministry is committed to preaching the gospel of Christ to the world without any ambiguity, ensuring that the message is accessible and transformative.</p>
-             <p><b style="padding-left: .2rem;">Spiritual Growth :</b> Discipleship is a cornerstone of the ministry's efforts, facilitating the spiritual growth of individuals seeking a deeper connection with God.</p>
-             <p class="hidden-paragraph"><b style="padding-left: .2rem;">Self-awareness :</b> The Renewed Minds Ministries guides people towards self-awareness, helping them recognize their true identities and the opportunities meant for their personal development.</p>
-             <p class="hidden-paragraph"><b style="padding-left: .2rem;"> Leadership Development :</b> The ministry takes a proactive role in raising and equipping leaders who are capable of not only leading themselves but also inspiring and guiding others, making resources and training readily available.</p>
-             <p class="hidden-paragraph"><b style="padding-left: .2rem;">Purpose Discovery :</b> Individual purpose is a crucial element of the ministry's work, which it facilitates through mentorship and coaching, enabling people to identify and pursue their life's purpose.</p>
-             <p class="hidden-paragraph"><b style="padding-left: .2rem;">Global Network :</b> The Renewed Minds Ministries strives to build a global network of individuals who are deeply committed to transformational leadership, fostering positive change worldwide.</p>
-             <a href="#stay0" class="category__button" onclick="toggleParagraphs()">Read More</a>
+// Fetch posts for current page with LIMIT and OFFSET
+$query = "SELECT * FROM posts ORDER BY date_time DESC LIMIT $posts_per_page OFFSET $offset";
+$posts = mysqli_query($connection, $query);
+?>
 
-         </div>
-         <div class="container doublepost__container background-img">
-             <h3 class="background_img-h3">HARRY SAM</h3>
-             <p class="background_img-p"> To make known his magnificent, glory, Power and knowledge that there will not be any ambiguity, that whosoever that come in contact with me would have met God in earthen vessel.
-             </p>
-             <a href="https://wa.me/+2347066620020" class="category__button">Talk To Us</a>
+<section class="featured">
+    <section class="singlepost" style="display: flex;">
+        <div class="container singlepost__container background-section slide image-1"></div>
+        <div class="container singlepost__container background-section slide image-2"></div>
+        <div class="container singlepost__container background-section slide image-3"></div>
+    </section>
 
-         </div>
+    <section class="doublepost">
+        <div class="container doublepost__container" id="stay0">
+            <h3 style="text-transform: uppercase;">key highlights that define The Renewed Minds Ministries' approach to its mission</h3>
+            <p><b style="padding-left: .2rem;">Clarity in Gospel :</b> The ministry is committed to preaching the gospel of Christ to the world without any ambiguity, ensuring that the message is accessible and transformative.</p>
+            <p class="hidden-paragraph"><b style="padding-left: .2rem;">Clarity in Gospel :</b> The ministry is committed to preaching the gospel of Christ to the world without any ambiguity, ensuring that the message is accessible and transformative.</p>
+            <p><b style="padding-left: .2rem;">Spiritual Growth :</b> Discipleship is a cornerstone of the ministry's efforts, facilitating the spiritual growth of individuals seeking a deeper connection with God.</p>
+            <p class="hidden-paragraph"><b style="padding-left: .2rem;">Self-awareness :</b> The Renewed Minds Ministries guides people towards self-awareness, helping them recognize their true identities and the opportunities meant for their personal development.</p>
+            <p class="hidden-paragraph"><b style="padding-left: .2rem;">Leadership Development :</b> The ministry takes a proactive role in raising and equipping leaders who are capable of not only leading themselves but also inspiring and guiding others, making resources and training readily available.</p>
+            <p class="hidden-paragraph"><b style="padding-left: .2rem;">Purpose Discovery :</b> Individual purpose is a crucial element of the ministry's work, which it facilitates through mentorship and coaching, enabling people to identify and pursue their life's purpose.</p>
+            <p class="hidden-paragraph"><b style="padding-left: .2rem;">Global Network :</b> The Renewed Minds Ministries strives to build a global network of individuals who are deeply committed to transformational leadership, fostering positive change worldwide.</p>
+            <a href="#stay0" class="category__button toggle-content-btn" onclick="toggleParagraphs()">Read More</a>
+        </div>
+        <div class="container doublepost__container background-img">
+            <h3 class="background_img-h3">HARRY SAM</h3>
+            <p class="background_img-p">To make known his magnificent, glory, Power and knowledge that there will not be any ambiguity, that whosoever that come in contact with me would have met God in earthen vessel.</p>
+            <a href="https://wa.me/+2347066620020" class="category__button">Talk To Us</a>
+        </div>
+    </section>
+</section>
 
-
-     </section>
- </section>
- <!-- show featured post if there's any  -->
- <?php if (mysqli_num_rows($featured_result) == 1) : ?>
-     <section class="featured">
-
-
-         <div class="container featured__container">
-             <div class="post__thumbnail">
-                 <img src="./images/<?= $featured['thumbnail'] ?>">
-             </div>
-             <div class="post__info">
-                 <?php
-                    // fetch category from categories table using category_id of post
-                    $category_id = $featured['category_id'];
-                    $category_query = "SELECT * FROM categories WHERE id=$category_id";
-                    $category_result = mysqli_query($connection, $category_query);
-                    $category = mysqli_fetch_assoc($category_result);
+<!-- Show featured post if there's any -->
+<?php if (mysqli_num_rows($featured_result) == 1) : ?>
+    <section class="featured">
+        <div class="container featured__container">
+            <div class="post__thumbnail">
+                <img src="./images/<?= $featured['thumbnail'] ?>">
+            </div>
+            <div class="post__info">
+                <?php
+                // Fetch category from categories table using category_id of post
+                $category_id = $featured['category_id'];
+                $category_query = "SELECT * FROM categories WHERE id=$category_id";
+                $category_result = mysqli_query($connection, $category_query);
+                $category = mysqli_fetch_assoc($category_result);
+                ?>
+                <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $category['id'] ?>" class="category__button"><?= $category['title'] ?></a>
+                <h2 class="post__title"><a href="<?= ROOT_URL ?>post.php?id=<?= $featured['id'] ?>"><?= $featured['title'] ?></a></h2>
+                <p class="post__body"><?= substr($featured['body'], 0, 150) ?>...</p>
+                <div class="post__author">
+                    <?php
+                    // Fetch author from users table using author_id
+                    $author_id = $featured['author_id'];
+                    $author_query = "SELECT * FROM users WHERE id=$author_id";
+                    $author_result = mysqli_query($connection, $author_query);
+                    $author = mysqli_fetch_assoc($author_result);
                     ?>
-                 <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $category['id'] ?>" class="category__button"><?= $category['title'] ?></a>
-                 <h2 class="post__title"><a href="<?= ROOT_URL ?>post.php?id=<?= $featured['id'] ?>"><?= $featured['title'] ?></a></h2>
-                 <p class="post__body"><?= substr($featured['body'], 0, 150) ?>...</p>
-                 <div class="post__author">
-                     <?php
-                        // fetch author from users table using author_id
-                        $author_id = $featured['author_id'];
-                        $author_query = "SELECT * FROM users WHERE id=$author_id";
-                        $author_result = mysqli_query($connection, $author_query);
-                        $author = mysqli_fetch_assoc($author_result);
+                    <div class="post__author-avatar">
+                        <img class="" src="./images/<?= $author['avatar'] ?>">
+                    </div>
+                    <div class="post__author-info">
+                        <h5>By: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
+                        <small><?= date("M d, Y - H:i", strtotime($featured['date_time'])) ?></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif ?>
+<!--=================================== END OF FEATURED =====================-->
 
-                        ?>
-                     <div class="post__author-avatar">
-                         <img class="" src="./images/<?= $author['avatar'] ?>">
-                     </div>
-                     <div class="post__author-info">
-                         <h5>By: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
-                         <small><?= date("M d, Y - H:i", strtotime($featured['date_time'])) ?></small>
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </section>
- <?php endif ?>
- <!--===================================   END OF FEATURED =====================-->
-
-
-
- <section class="posts <?= $featured ? '' : 'section__extra-margin' ?>">
-     <div class="container posts__container">
-         <?php while ($post = mysqli_fetch_assoc($posts)) : ?>
-             <article class="post">
-                 <div class="post__thumbnail">
-                     <img src="./images/<?= $post['thumbnail'] ?>">
-                 </div>
-                 <div class="post__info">
-                     <?php
-                        // fetch category from categories table using category_id of post
+<section class="posts <?= $featured ? '' : 'section__extra-margin' ?>">
+    <div class="container posts__container">
+        <?php if (mysqli_num_rows($posts) > 0) : ?>
+            <?php while ($post = mysqli_fetch_assoc($posts)) : ?>
+                <article class="post">
+                    <div class="post__thumbnail">
+                        <img src="./images/<?= $post['thumbnail'] ?>">
+                    </div>
+                    <div class="post__info">
+                        <?php
+                        // Fetch category from categories table using category_id of post
                         $category_id = $post['category_id'];
                         $category_query = "SELECT * FROM categories WHERE id=$category_id";
                         $category_result = mysqli_query($connection, $category_query);
                         $category = mysqli_fetch_assoc($category_result);
                         ?>
-                     <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $post['category_id'] ?>" class="category__button"><?= $category['title'] ?></a>
-                     <h3 class="post__title"><a href="<?= ROOT_URL ?>post.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h3>
-                     <p class="post__body"> <?php
-                                            $body = htmlspecialchars_decode($post['body']);
-                                            $body = strip_tags($body, '<br>');
-                                            $body_snippet = substr($body, 0, 150);
-                                            echo $body_snippet;
-                                            ?>...</p>
-                     <div class="post__author">
-                         <?php
-                            // fetch author from users table using author_id
+                        <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $post['category_id'] ?>" class="category__button"><?= $category['title'] ?></a>
+                        <h3 class="post__title"><a href="<?= ROOT_URL ?>post.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h3>
+                        <p class="post__body"><?php
+                                                $body = htmlspecialchars_decode($post['body']);
+                                                $body = strip_tags($body, '<br>');
+                                                $body_snippet = substr($body, 0, 150);
+                                                echo $body_snippet;
+                                                ?>...</p>
+                        <div class="post__author">
+                            <?php
+                            // Fetch author from users table using author_id
                             $author_id = $post['author_id'];
                             $author_query = "SELECT * FROM users WHERE id=$author_id";
                             $author_result = mysqli_query($connection, $author_query);
                             $author = mysqli_fetch_assoc($author_result);
-
                             ?>
-                         <div class="post__author-avatar">
-                             <img src="./images/<?= $author['avatar'] ?>">
-                         </div>
-                         <div class="post__author-info">
-                             <h5>By: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
-                             <small><?= date("M d, Y - H:i", strtotime($post['date_time'])) ?></small>
-                         </div>
-                     </div>
-                 </div>
-             </article>
-         <?php endwhile ?>
-     </div>
- </section>
+                            <div class="post__author-avatar">
+                                <img src="./images/<?= $author['avatar'] ?>">
+                            </div>
+                            <div class="post__author-info">
+                                <h5>By: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
+                                <small><?= date("M d, Y - H:i", strtotime($post['date_time'])) ?></small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            <?php endwhile ?>
+        <?php else : ?>
+            <div class="alert__message error lg">
+                <p>No posts found</p>
+            </div>
+        <?php endif ?>
+    </div>
 
- <!--===================================   END OF POSTS=====================-->
+    <!-- PAGINATION -->
+    <?php if ($total_pages > 1) : ?>
+        <div class="container pagination__container">
+            <div class="pagination">
+                <!-- Previous Button -->
+                <?php if ($current_page > 1) : ?>
+                    <a href="<?= ROOT_URL ?>index.php?page=<?= $current_page - 1 ?>" class="pagination__link">&laquo; Previous</a>
+                <?php endif ?>
 
- <section class="category__buttons">
-     <div class="container category__buttons-container">
-         <?php
-            $all_categories_query = "SELECT * FROM categories";
-            $all_categories = mysqli_query($connection, $all_categories_query);
-            ?>
-         <?php while ($category = mysqli_fetch_assoc($all_categories)) : ?>
-             <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $category['id'] ?>" class="category__button"><?= $category['title'] ?></a>
-         <?php endwhile ?>
-     </div>
- </section>
+                <!-- Page Numbers -->
+                <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                    <?php if ($i == $current_page) : ?>
+                        <span class="pagination__link active"><?= $i ?></span>
+                    <?php else : ?>
+                        <a href="<?= ROOT_URL ?>index.php?page=<?= $i ?>" class="pagination__link"><?= $i ?></a>
+                    <?php endif ?>
+                <?php endfor ?>
 
- <script>
-     const slides = document.querySelectorAll('.slide');
-     let currentSlide = 0;
+                <!-- Next Button -->
+                <?php if ($current_page < $total_pages) : ?>
+                    <a href="<?= ROOT_URL ?>index.php?page=<?= $current_page + 1 ?>" class="pagination__link">Next &raquo;</a>
+                <?php endif ?>
+            </div>
+        </div>
+    <?php endif ?>
+</section>
 
-     function showSlide(slideIndex) {
-         slides.forEach((slide) => {
-             slide.style.opacity = 0;
-         });
+<!--=================================== END OF POSTS =====================-->
 
-         slides[slideIndex].style.opacity = 1;
-     }
+<section class="category__buttons">
+    <div class="container category__buttons-container">
+        <?php
+        $all_categories_query = "SELECT * FROM categories";
+        $all_categories = mysqli_query($connection, $all_categories_query);
+        ?>
+        <?php while ($category = mysqli_fetch_assoc($all_categories)) : ?>
+            <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $category['id'] ?>" class="category__button"><?= $category['title'] ?></a>
+        <?php endwhile ?>
+    </div>
+</section>
 
-     function nextSlide() {
-         currentSlide = (currentSlide + 1) % slides.length;
-         showSlide(currentSlide);
-     }
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
 
-     // Initial display of the first slide
-     showSlide(currentSlide);
+    function showSlide(slideIndex) {
+        slides.forEach((slide) => {
+            slide.style.opacity = 0;
+        });
+        slides[slideIndex].style.opacity = 1;
+    }
 
-     // Automatic slide change (uncomment if you want automatic sliding)
-     const slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
- </script>
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
 
- <script>
-     var hiddenParagraphs = document.getElementsByClassName("hidden-paragraph");
-     var btn = document.querySelector(".category__button");
-     var isHidden = true;
+    // Initial display of the first slide
+    showSlide(currentSlide);
 
-     function toggleParagraphs() {
-         isHidden = !isHidden;
+    // Automatic slide change
+    const slideInterval = setInterval(nextSlide, 5000);
+</script>
 
-         for (var i = 0; i < hiddenParagraphs.length; i++) {
-             hiddenParagraphs[i].style.display = isHidden ? "none" : "block";
-         }
+<script>
+    var hiddenParagraphs = document.getElementsByClassName("hidden-paragraph");
+    var btn = document.querySelector(".toggle-content-btn");
+    var isHidden = true;
 
-         btn.textContent = isHidden ? "Read More" : "Read Less";
-     }
- </script>
- <!--===================================   END OF CATEGORY BUTTONS=====================-->
+    function toggleParagraphs() {
+        isHidden = !isHidden;
 
- <?php
-    include 'partials/footer.php';
-    ?>
+        for (var i = 0; i < hiddenParagraphs.length; i++) {
+            hiddenParagraphs[i].style.display = isHidden ? "none" : "block";
+        }
+
+        btn.textContent = isHidden ? "Read More" : "Read Less";
+    }
+</script>
+
+<!--=================================== END OF CATEGORY BUTTONS =====================-->
+
+<?php
+include 'partials/footer.php';
+?>

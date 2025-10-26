@@ -21,14 +21,14 @@ if (isset($_SESSION['user-id'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | Post | Website</title>
+    <title>TRM | Blog | Post</title>
     <!-- CUSTOM STYLESHEET -->
     <link rel="stylesheet" href="<?= ROOT_URL ?>css/style.css">
     <!-- ICONSCOUT CDN -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <!-- GOOGLE FONTS (MONSERRAT)-->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="<?= ROOT_URL ?>images/fav.png" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= ROOT_URL ?>images/logomain.svg" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <!-- Media Query for Logo -->

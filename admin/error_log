@@ -1,0 +1,13 @@
+[30-Sep-2023 12:37:51 America/New_York] PHP Warning:  Undefined array key "edit-post" in /home/cresouhe/akin.crescentboard.trade/admin/edit-post-logic.php on line 59
+[30-Sep-2023 12:39:59 America/New_York] PHP Warning:  Undefined array key "edit-post" in /home/cresouhe/akin.crescentboard.trade/admin/edit-post-logic.php on line 59
+[01-Oct-2023 11:08:26 America/New_York] PHP Warning:  Undefined array key "is_featured" in /home/cresouhe/akin.crescentboard.trade/admin/edit-post-logic.php on line 11
+[01-Oct-2023 11:08:26 America/New_York] PHP Warning:  Undefined array key "edit-post" in /home/cresouhe/akin.crescentboard.trade/admin/edit-post-logic.php on line 59
+[01-Oct-2023 11:08:28 America/New_York] PHP Warning:  Undefined array key "is_featured" in /home/cresouhe/akin.crescentboard.trade/admin/edit-post-logic.php on line 11
+[01-Oct-2023 11:08:28 America/New_York] PHP Warning:  Undefined array key "edit-post" in /home/cresouhe/akin.crescentboard.trade/admin/edit-post-logic.php on line 59
+[01-Oct-2023 11:56:14 America/New_York] PHP Warning:  Trying to access array offset on value of type null in /home/cresouhe/akin.crescentboard.trade/partials/header.php on line 71
+[03-Oct-2023 16:35:35 America/New_York] PHP Warning:  Undefined array key "is_featured" in /home/cresouhe/public_html/admin/add-post-logic.php on line 9
+[16-Oct-2023 09:35:46 America/New_York] PHP Warning:  Undefined array key "edit-post" in /home/cresouhe/public_html/admin/edit-post-logic.php on line 59
+[16-Oct-2023 09:37:18 America/New_York] PHP Warning:  Undefined array key "edit-post" in /home/cresouhe/public_html/admin/edit-post-logic.php on line 59
+[26-Oct-2023 12:03:22 America/New_York] PHP Warning:  Undefined array key "edit-post" in /home/cresouhe/public_html/admin/edit-post-logic.php on line 59
+[26-Oct-2023 16:11:16 America/New_York] PHP Warning:  Undefined array key "edit-post" in /home/cresouhe/public_html/admin/edit-post-logic.php on line 59
+[27-Oct-2023 06:40:18 America/New_York] PHP Warning:  Undefined array key "edit-post" in /home/cresouhe/public_html/admin/edit-post-logic.php on line 59
